@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1 class="mt-4">Статья: {{get_article.name}}</h1>
+<p><a href="/">Вернуться назад</a></p>
+<p>Дата создания:  {{get_article.create_date}}</p>
+<p>Название:  {{get_article.name}}</p>
+<p>Текст: {{get_article.text}}</p>
+
+
+
+<p>Комментариев : {{get_article.comments_articles.all.count}}</p>
+
+<hr>
+
+
+
+{% if messages %}
+<div class="alert alert-success">
+
+{% for m in messages %}
+{{m}}
+{% endfor %}
+
+</div>
+{% endif %}
+<ul>
+{% for item in get_article.comments_articles.all %}
+
+Дата создания : {{item.create_date}}<br>
+Автор комментария : {{item.author}}<br>
+Cтатус комментария : {{ item.status }}<br>
+
+{{item.text}}
+<hr>
+
+{% endfor %}
+
+</ul>
+<p>Добавить комментарий</p>
+<div class="col-4">
+            <form action="" id="add_form" method="post">
+               {% csrf_token %}
+               {{form.as_p}}
+            </form>
+            <button form="add_form" type="submit" class="btn btn-primary">Добавить</button>
+
+
+</div>
+
+{% endblock %}
